@@ -1,15 +1,9 @@
 # coding: utf-8
 import time
-import logging
-import traceback
 from urllib import response
 import PySimpleGUI as sg
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
-
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 
 sg.theme('DarkAmber')   # デザインテーマの設定
@@ -53,7 +47,7 @@ while True:
             pins_list = []
 
             for item in response['items']:
-                pins_list.appned(item['message']['ts'])
+                pins_list.append(item['message']['ts'])
 
             response = web_client.conversations_history(channel=channel_id)
 
@@ -68,6 +62,9 @@ while True:
 
         except SlackApiError as e:
             print(f"Error posting message: {e}")
-        #TODO 終了処理を入れる
+
+        print('all message are deleted.')
+        time.sleep(3)
+        break
 
 window.close()
