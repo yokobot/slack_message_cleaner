@@ -12,4 +12,4 @@ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poet
 ## usage
 
 1. poetry init
-2. poetry run python <python-file>
+2. poetry run python app.py

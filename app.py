@@ -42,7 +42,6 @@ while True:
         print(channel_id)
 
         try:
-            #TODO ページング対応する
             response = web_client.pins_list(channel=channel_id)
             pins_list = []
 
@@ -60,11 +59,29 @@ while True:
                     print('1 message deleteed')
                 time.sleep(1)
 
+            while True:
+                if not response.get('response_metadata'):
+                    break
+                else:
+                    response = web_client.conversations_history(
+                        channel=channel_id,
+                        cursor=response['response_metadata']['next_cursor']
+                    )
+
+                    for message in response['messages']:
+                        if message['ts'] not in pins_list:
+                            result = web_client.chat_delete(
+                                channel=channel_id,
+                                ts=message['ts']
+                            )
+                            print('1 message deleteed')
+                        time.sleep(1)
+
         except SlackApiError as e:
             print(f"Error posting message: {e}")
 
         print('all message are deleted.')
-        time.sleep(3)
-        break
+        #TODO 削除の途中でcloseボタンを押しても受け付けるようにする
+        #TODO ループをもうちょっとシンプルにする
 
 window.close()
