@@ -39,7 +39,7 @@ while True:
     elif event == '削除':
         web_client = WebClient(token=values['token'])
         channel_id = values['channel']
-        print(channel_id)
+        print(channel_id + ' のメッセージを削除します.')
 
         try:
             response = web_client.pins_list(channel=channel_id)
@@ -81,7 +81,7 @@ while True:
             print(f"Error posting message: {e}")
 
         print('all message are deleted.')
-        #TODO 削除の途中でcloseボタンを押しても受け付けるようにする
         #TODO ループをもうちょっとシンプルにする
+        #TODO 処理中にcloseボタンが押された場合の処理を入れる
 
 window.close()
